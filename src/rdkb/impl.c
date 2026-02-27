@@ -464,7 +464,7 @@ char * getParamValue(char *paramName)
 		paramCount = sizeof(getParamList)/sizeof(getParamList[0]);
 		param_t **parametervalArr = (param_t **) malloc(sizeof(param_t *) * paramCount);
 
-		CpeabsDebug("paramName : %s paramCount %d\n",getParamList[0], paramCount);
+		CpeabsInfo("paramName : %s paramCount %d\n",getParamList[0], paramCount);
 		getValues_rbus(getParamList, paramCount, 0, NULL, &parametervalArr, &count, &ret);
 
 		if (ret == WDMP_SUCCESS )
@@ -480,7 +480,7 @@ char * getParamValue(char *paramName)
 			CPEABS_FREE(paramValue);
 		}
 		CPEABS_FREE(parametervalArr);
-		CpeabsDebug("getParamValue : paramValue is %s\n", paramValue);
+		CpeabsInfo("getParamValue : paramValue is %s\n", paramValue);
 		return paramValue;
 	}
 	CpeabsError("getParamValue : returns NULL\n");
@@ -1041,7 +1041,14 @@ char* getDeviceMode()
 {
 	char *deviceMode = NULL;
 	deviceMode = getParamValue(DEVICE_MODE);
-	CpeabsDebug("deviceMode returned from lib is %s\n", deviceMode);
+	if(deviceMode == NULL)
+	{
+		CpeabsError("deviceMode returned from lib is NULL\n");
+	}
+	else
+	{
+		CpeabsInfo("deviceMode returned from lib is %s\n", deviceMode);
+	}
 	return deviceMode;
 }
 #endif
