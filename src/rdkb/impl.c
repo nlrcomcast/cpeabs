@@ -73,6 +73,11 @@
 #define MQTT_PORT_PARAM "Device.X_RDK_MQTT.Port"
 
 #endif
+
+#if defined(_ONESTACK_PRODUCT_REQ_)
+#define DEVICE_MODE "Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.DeviceMode"
+#endif
+
 /*----------------------------------------------------------------------------*/
 /*                               Data Structures                              */
 /*----------------------------------------------------------------------------*/
@@ -1029,5 +1034,22 @@ void getValues_rbusmqtt(const char *paramName[], const unsigned int paramCount, 
 		}
 		rbusProperty_Release(props);
 	}
+}
+#endif
+
+#if defined(_ONESTACK_PRODUCT_REQ_)
+char* getDeviceMode()
+{
+	char *deviceMode = NULL;
+	deviceMode = getParamValue(DEVICE_MODE);
+	if(deviceMode == NULL)
+	{
+		CpeabsError("Failed to read %s (NULL returned)\n", DEVICE_MODE);
+	}
+	else
+	{
+		CpeabsDebug("%s returned from lib is %s\n", DEVICE_MODE, deviceMode);
+	}
+	return deviceMode;
 }
 #endif
